@@ -1,11 +1,11 @@
-# Hardhat Boilerplate
+# ENS testing
 
 This repository contains a sample project that you can use as the starting point
-for your Ethereum project. It's also a great fit for learning the basics of
-smart contract development.
+for your ENS deployment test. It's also a great fit for learning the basics of
+ENS development.
 
 This project is intended to be used with the
-[Hardhat Beginners Tutorial](https://hardhat.org/tutorial), but you should be
+[Deploying ENS on a Private Chain](https://docs.ens.domains/deploying-ens-on-a-private-chain) tutorial, but you should be
 able to follow it by yourself by reading the README and exploring its
 `contracts`, `tests`, `scripts` and `frontend` directories.
 
@@ -15,8 +15,8 @@ The first things you need to do are cloning this repository and installing its
 dependencies:
 
 ```sh
-git clone https://github.com/NomicFoundation/hardhat-boilerplate.git
-cd hardhat-boilerplate
+git clone https://github.com/bertux/ens-fifs.git
+cd ens-fifs
 npm install
 ```
 
