@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/NomicFoundation/hardhat-boilerplate#readme",
   "devDependencies": {
+    "@ensdomains/ens-contracts": "^1.0.0",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.5",

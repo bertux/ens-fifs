@@ -22,17 +22,17 @@ async function main() {
 
   console.log("Account balance:", (await deployer.getBalance()).toString());
 
-  const Token = await ethers.getContractFactory("Token");
-  const token = await Token.deploy();
-  await token.deployed();
+  const ENSRegistry = await ethers.getContractFactory("ENSRegistry");
+  const ens = await ENSRegistry.deploy();
+  await ens.deployed();
 
-  console.log("Token address:", token.address);
+  console.log("ENSRegistry address:", ens.address);
 
   // We also save the contract's artifacts and address in the frontend directory
-  saveFrontendFiles(token);
+  saveFrontendFiles(ens);
 }
 
-function saveFrontendFiles(token) {
+function saveFrontendFiles(ens) {
   const fs = require("fs");
   const contractsDir = path.join(__dirname, "..", "frontend", "src", "contracts");
 
@@ -42,14 +42,14 @@ function saveFrontendFiles(token) {
 
   fs.writeFileSync(
     path.join(contractsDir, "contract-address.json"),
-    JSON.stringify({ Token: token.address }, undefined, 2)
+    JSON.stringify({ ENSRegistry: ens.address }, undefined, 2)
   );
 
-  const TokenArtifact = artifacts.readArtifactSync("Token");
+  const ENSRegistryArtifact = artifacts.readArtifactSync("ENSRegistry");
 
   fs.writeFileSync(
-    path.join(contractsDir, "Token.json"),
-    JSON.stringify(TokenArtifact, null, 2)
+    path.join(contractsDir, "ENSRegistry.json"),
+    JSON.stringify(ENSRegistryArtifact, null, 2)
   );
 }
 
