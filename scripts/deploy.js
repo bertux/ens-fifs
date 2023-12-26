@@ -2,6 +2,12 @@
 // yours, or create new ones.
 
 const path = require("path");
+const namehash = require('@ensdomains/eth-ens-namehash');
+const utils = ethers.utils;
+const labelhash = (label) => utils.keccak256(utils.toUtf8Bytes(label))
+const tld = "test";
+const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
+const ZERO_HASH = "0x0000000000000000000000000000000000000000000000000000000000000000";
 
 async function main() {
   // This is just a convenience check
@@ -25,14 +31,24 @@ async function main() {
   const ENSRegistry = await ethers.getContractFactory("ENSRegistry");
   const ens = await ENSRegistry.deploy();
   await ens.deployed();
-
   console.log("ENSRegistry address:", ens.address);
 
+  // const PublicResolver = await ethers.getContractFactory("PublicResolver")
+  // const resolver = await PublicResolver.deploy(ens.address, ZERO_ADDRESS, ZERO_ADDRESS, ZERO_ADDRESS);
+  // await resolver.deployed()
+  // console.log("PublicResolver address:", resolver.address);
+  
+  const FIFSRegistrar = await ethers.getContractFactory("FIFSRegistrar");
+  const registrar = await FIFSRegistrar.deploy(ens.address, namehash.hash(tld));
+  await registrar.deployed();
+  await ens.setSubnodeOwner(ZERO_HASH, labelhash(tld), registrar.address);
+  console.log("FIFSRegistrar address:", registrar.address);
+
   // We also save the contract's artifacts and address in the frontend directory
-  saveFrontendFiles(ens);
+  saveFrontendFiles(ens, registrar);
 }
 
-function saveFrontendFiles(ens) {
+function saveFrontendFiles(ens, registrar) {
   const fs = require("fs");
   const contractsDir = path.join(__dirname, "..", "frontend", "src", "contracts");
 
@@ -42,14 +58,25 @@ function saveFrontendFiles(ens) {
 
   fs.writeFileSync(
     path.join(contractsDir, "contract-address.json"),
-    JSON.stringify({ ENSRegistry: ens.address }, undefined, 2)
+    JSON.stringify({ ENSRegistry: ens.address, FIFSRegistrar: registrar.address }, undefined, 2)
   );
 
   const ENSRegistryArtifact = artifacts.readArtifactSync("ENSRegistry");
-
   fs.writeFileSync(
     path.join(contractsDir, "ENSRegistry.json"),
     JSON.stringify(ENSRegistryArtifact, null, 2)
+  );
+
+  // const PublicResolverArtifact = artifacts.readArtifactSync("PublicResolver");
+  // fs.writeFileSync(
+  //   path.join(contractsDir, "PublicResolver.json"),
+  //   JSON.stringify(PublicResolverArtifact, null, 2)
+  // );
+
+  const FIFSRegistrarArtifact = artifacts.readArtifactSync("FIFSRegistrar");
+  fs.writeFileSync(
+    path.join(contractsDir, "FIFSRegistrar.json"),
+    JSON.stringify(FIFSRegistrarArtifact, null, 2)
   );
 }
 
