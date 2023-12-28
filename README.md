@@ -9,6 +9,8 @@ This project is intended to be used with the
 able to follow it by yourself by reading the README and exploring its
 `contracts`, `tests`, `scripts` and `frontend` directories.
 
+For PGN we will look at [OP-Goerli Passport NFT](https://github.com/ethereum-optimism/evmgateway-starter) based on [EVM CCIP-Read Gateway](https://github.com/ensdomains/evmgateway)
+
 ## Quick start
 
 The first things you need to do are cloning this repository and installing its
