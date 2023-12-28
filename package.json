@@ -5,6 +5,8 @@
   "scripts": {
     "test": "hardhat test",
     "node": "hardhat node",
+    "flatten:registry": "hardhat flatten contracts/ENSRegistry.sol > artifacts/contracts/ENSRegistry.flat.sol",
+    "flatten:registrar": "hardhat flatten contracts/FIFSRegistrar.sol > artifacts/contracts/FIFSRegistrar.flat.sol",
     "deploy": "hardhat run scripts/deploy.js --network spark"
   },
   "repository": {
